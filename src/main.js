@@ -155,7 +155,7 @@ const createRouteTemplate = () => {
  */
 const createRouteEditTemplate = () => {
   return (
-    `<form class="event  event--edit" action="#" method="post">
+    `<form class="trip-events__item  event  event--edit" action="#" method="post">
       <header class="event__header">
         <div class="event__type-wrapper">
           <label class="event__type  event__type-btn" for="event-type-toggle-1">
@@ -326,6 +326,35 @@ const createRouteEditTemplate = () => {
         </section>
       </section>
     </form>`
+  );
+};
+
+/**
+ * Create template trip-list
+ * @return {string} html template trip-list
+ */
+const createTripListTemplate = () => {
+  return (
+    `<ul class="trip-days">
+    </ul>`
+  );
+};
+
+
+/**
+ * Create template trip-day
+ * @return {string} html template trip-day
+ */
+const createTripDayTemplate = () => {
+  return (
+    `<li class="trip-days__item  day">
+      <div class="day__info">
+        <span class="day__counter">1</span>
+        <time class="day__date" datetime="2019-03-18">MAR 18</time>
+      </div>
+      <ul class="trip-events__list">
+      </ul>
+    </li>`
   );
 };
 
