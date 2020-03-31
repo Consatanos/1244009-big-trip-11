@@ -1,7 +1,7 @@
 # Личный проект «Большое путешествие» [![Build status][travis-image]][travis-url]
 
 * Студент: [Константин Оськин](https://up.htmlacademy.ru/ecmascript/11/user/1244009).
-* Наставник: `Неизвестно`.
+* Наставник: [Григорий Бушманов](https://htmlacademy.ru/profile/id1106363).
 
 ---
 
