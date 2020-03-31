@@ -328,3 +328,13 @@ const createRouteEditTemplate = () => {
     </form>`
   );
 };
+
+/**
+ * Render element to DOM
+ * @param {*} constainer
+ * @param {string} template
+ * @param {string} place
+ */
+const render = (constainer, template, place) => {
+  constainer.insertAdjacentHTML(place, template);
+};
