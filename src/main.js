@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * Create template trip-info
+ * @return {string} html template trip-info
+ */
 const createTripInfoTemplate = () => {
   return (
     `<section class="trip-main__trip-info  trip-info">
@@ -11,6 +15,10 @@ const createTripInfoTemplate = () => {
   );
 };
 
+/**
+ * Create template trip-coast
+ * @return {string} html template trip-coast
+ */
 const createTripCoastTemplate = () => {
   return (
     `<p class="trip-info__cost">
@@ -19,6 +27,10 @@ const createTripCoastTemplate = () => {
   );
 };
 
+/**
+ * Create template site menu
+ * @return {string} html template site menu
+ */
 const createSiteMenuTemplate = () => {
   return (
     `<nav class="trip-controls__trip-tabs  trip-tabs">
@@ -28,6 +40,10 @@ const createSiteMenuTemplate = () => {
   );
 };
 
+/**
+ * Create template filters
+ * @return {string} html template filters
+ */
 const createFiltersTemplate = () => {
   return (
     `<form class="trip-filters" action="#" method="get">
@@ -51,6 +67,10 @@ const createFiltersTemplate = () => {
   );
 };
 
+/**
+ * Create template sort
+ * @return {string} html template sort
+ */
 const createSortTemplate = () => {
   return (
     `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
