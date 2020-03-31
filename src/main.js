@@ -1,5 +1,7 @@
 'use strict';
 
+const ROUTE_COUNT = 3;
+
 /**
  * Create template trip-info
  * @return {string} html template trip-info
@@ -367,3 +369,28 @@ const createTripDayTemplate = () => {
 const render = (constainer, template, place) => {
   constainer.insertAdjacentHTML(place, template);
 };
+
+const tripMainElement = document.querySelector(`.trip-main`);
+const tripControlsElement = document.querySelector(`.trip-controls`);
+const tripEventsElement = document.querySelector(`.trip-events`);
+
+render(tripMainElement, createTripInfoTemplate(), `afterbegin`);
+
+const tripInfoElement = document.querySelector(`.trip-info`);
+
+render(tripInfoElement, createTripCoastTemplate(), `beforeend`);
+render(tripControlsElement, createSiteMenuTemplate(), `afterbegin`);
+render(tripControlsElement, createFiltersTemplate(), `beforeend`);
+render(tripEventsElement, createSortTemplate(), `beforeend`);
+render(tripEventsElement, createRouteEditTemplate(), `beforeend`);
+render(tripEventsElement, createTripListTemplate(), `beforeend`);
+
+const tripDaysElement = document.querySelector(`.trip-days`);
+
+render(tripDaysElement, createTripDayTemplate(), `beforeend`);
+
+const tripListElement = document.querySelector(`.trip-events__list`);
+
+for (let i = 0; i < ROUTE_COUNT; i++) {
+  render(tripListElement, createRouteTemplate(), `beforeend`);
+}
