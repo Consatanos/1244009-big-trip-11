@@ -18,10 +18,10 @@ const createTripInfoTemplate = () => {
 };
 
 /**
- * Create template trip-coast
- * @return {string} html template trip-coast
+ * Create template trip-cost
+ * @return {string} html template trip-cost
  */
-const createTripCoastTemplate = () => {
+const createTripCostTemplate = () => {
   return (
     `<p class="trip-info__cost">
       Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
@@ -362,35 +362,35 @@ const createTripDayTemplate = () => {
 
 /**
  * Render element to DOM
- * @param {*} constainer
+ * @param {*} container
  * @param {string} template
  * @param {string} place
  */
-const render = (constainer, template, place) => {
-  constainer.insertAdjacentHTML(place, template);
+const render = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
 };
 
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlsElement = document.querySelector(`.trip-controls`);
 const tripEventsElement = document.querySelector(`.trip-events`);
 
-render(tripMainElement, createTripInfoTemplate(), `afterbegin`);
+render(tripMainElement, createTripInfoTemplate(), `afterBegin`);
 
 const tripInfoElement = document.querySelector(`.trip-info`);
 
-render(tripInfoElement, createTripCoastTemplate(), `beforeend`);
-render(tripControlsElement, createSiteMenuTemplate(), `afterbegin`);
-render(tripControlsElement, createFiltersTemplate(), `beforeend`);
-render(tripEventsElement, createSortTemplate(), `beforeend`);
-render(tripEventsElement, createRouteEditTemplate(), `beforeend`);
-render(tripEventsElement, createTripListTemplate(), `beforeend`);
+render(tripInfoElement, createTripCostTemplate(), `beforeEnd`);
+render(tripControlsElement, createSiteMenuTemplate(), `afterBegin`);
+render(tripControlsElement, createFiltersTemplate(), `beforeEnd`);
+render(tripEventsElement, createSortTemplate(), `beforeEnd`);
+render(tripEventsElement, createRouteEditTemplate(), `beforeEnd`);
+render(tripEventsElement, createTripListTemplate(), `beforeEnd`);
 
 const tripDaysElement = document.querySelector(`.trip-days`);
 
-render(tripDaysElement, createTripDayTemplate(), `beforeend`);
+render(tripDaysElement, createTripDayTemplate(), `beforeEnd`);
 
 const tripListElement = document.querySelector(`.trip-events__list`);
 
 for (let i = 0; i < ROUTE_COUNT; i++) {
-  render(tripListElement, createRouteTemplate(), `beforeend`);
+  render(tripListElement, createRouteTemplate(), `beforeEnd`);
 }
