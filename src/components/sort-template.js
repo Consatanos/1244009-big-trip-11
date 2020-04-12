@@ -38,5 +38,5 @@ const sortTemplate = () => {
 };
 
 export {
-  sortTemplate
+  sortTemplate,
 };
