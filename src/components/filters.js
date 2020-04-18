@@ -1,3 +1,7 @@
+import {
+  createElement,
+} from '../utils';
+
 /**
  * Create filter markup
  * @param {string} filter
@@ -17,11 +21,11 @@ const createFilterMurkup = (filter, isChecked) => {
 };
 
 /**
- * Create template filters
+ * Create filters markup
  * @param {array} filters
- * @return {string} html template filters
+ * @return {string} filters markup
  */
-const filtersTemplate = (filters) => {
+const createFiltersMarkup = (filters) => {
   return (
     `<form class="trip-filters" action="#" method="get">
 
@@ -32,6 +36,25 @@ const filtersTemplate = (filters) => {
   );
 };
 
-export {
-  filtersTemplate,
-};
+export default class Filter {
+  constructor(filters) {
+    this._filters = filters;
+    this._element = null;
+  }
+
+  getTempate() {
+    return createFiltersMarkup(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTempate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
