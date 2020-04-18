@@ -1,29 +1,14 @@
 'use strict';
 
-import {
-  tripInfoTemplate,
-} from './components/trip-info-template';
-import {
-  tripCostTemplate,
-} from './components/trip-cost-template';
-import {
-  siteMenuTemplate,
-} from './components/site-menu-template';
-import {
-  filtersTemplate,
-} from './components/filters-template';
-import {
-  sortTemplate,
-} from './components/sort-template';
-import {
-  routeEditTemplate,
-} from './components/route-edit-template';
-import {
-  tripListTemplate,
-} from './components/trip-list-template';
-import {
-  tripDayTemplate,
-} from './components/trip-day-template';
+import FilterComponent from './components/filters';
+import MenuComponent from './components/menu';
+import SortComponent from './components/sort';
+import TripCostComponent from './components/trip-cost';
+import TripDayComponent from './components/trip-day';
+import TripInfoComponent from './components/trip-info';
+import TripListComponent from './components/trip-list';
+import RouteComponent from './components/route';
+import RouteEditComponent from './components/route-edit';
 
 import {
   generateFilters,
@@ -31,19 +16,14 @@ import {
 import {
   generateRoutes,
 } from './mock/route';
+import {
+  render,
+  RenderPosition,
+} from './utils';
+
 
 const ROUTE_COUNT = 20;
 const SHOWING_ROUTES_COUNT_ON_START = 10;
-
-/**
- * Render element to DOM
- * @param {*} container
- * @param {string} template
- * @param {string} place
- */
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
 
 const filters = generateFilters();
 const routes = generateRoutes(ROUTE_COUNT);
@@ -63,23 +43,101 @@ const tripMainElement = document.querySelector(`.trip-main`);
 const tripControlsElement = document.querySelector(`.trip-controls`);
 const tripEventsElement = document.querySelector(`.trip-events`);
 
-render(tripMainElement, tripInfoTemplate(routePoints), `afterBegin`);
+render(tripMainElement, new TripInfoComponent(routePoints).getElement(), RenderPosition.AFTERBEGIN);
 
 const tripInfoElement = document.querySelector(`.trip-info`);
 
-render(tripInfoElement, tripCostTemplate(routesCost), `beforeEnd`);
-render(tripControlsElement, siteMenuTemplate(), `afterBegin`);
-render(tripControlsElement, filtersTemplate(filters), `beforeEnd`);
-render(tripEventsElement, sortTemplate(), `beforeEnd`);
-render(tripEventsElement, routeEditTemplate(routes[0]), `beforeEnd`);
-render(tripEventsElement, tripListTemplate(), `beforeEnd`);
+render(tripInfoElement, new TripCostComponent(routesCost).getElement(), RenderPosition.BEFOREEND);
+render(tripControlsElement, new MenuComponent().getElement(), RenderPosition.AFTERBEGIN);
+render(tripControlsElement, new FilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
+render(tripEventsElement, new SortComponent().getElement(), RenderPosition.BEFOREEND);
+render(tripEventsElement, new TripListComponent().getElement(), RenderPosition.BEFOREEND);
 
 const tripDaysElement = document.querySelector(`.trip-days`);
+
+/**
+ * Render route
+ * @param {object} routeDayElement
+ * @param {object} route
+ */
+const renderRoute = (routeDayElement, route) => {
+  const replaceRouteToEdit = () => {
+    routeDayElement.replaceChild(routeEditComponent.getElement(), routeComponent.getElement());
+  };
+
+  const replaceEditToRoute = () => {
+    routeDayElement.replaceChild(routeComponent.getElement(), routeEditComponent.getElement());
+  };
+
+  /**
+   * Close route edit form on click esc
+   * @param {*} event
+   */
+  const onEscKeyDown = (event) => {
+    const isEscKey = event.key === `Escape` || event.key === `Esc`;
+
+    if (isEscKey) {
+      replaceEditToRoute();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  const routeComponent = new RouteComponent(route);
+  const openEditButton = routeComponent.getElement().querySelector(`.event__rollup-btn`);
+
+  /**
+   * Open route edit form
+   */
+  openEditButton.addEventListener(`click`, () => {
+    replaceRouteToEdit();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+
+  const routeEditComponent = new RouteEditComponent(route);
+  const closeEditButton = routeEditComponent.getElement().querySelector(`.event__rollup-btn`);
+  const editForm = routeEditComponent.getElement().querySelector(`.event--edit`);
+
+  /**
+   * Close route edit form
+   */
+  closeEditButton.addEventListener(`click`, () => {
+    replaceEditToRoute();
+  });
+
+  /**
+   * Save route edit form
+   */
+  editForm.addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    replaceEditToRoute();
+    document.removeEventListener(`keydown`, onEscKeyDown);
+  });
+
+  render(routeDayElement, routeComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
+/**
+ * Render route day with routes
+ * @param {string} day
+ * @param {array} routesDay
+ * @return {string}
+ */
+const renderRouteDay = (day, routesDay) => {
+  const tripDay = new TripDayComponent(day);
+  const tripDayList = tripDay.getElement().querySelector(`.trip-events__list`);
+  render(tripDaysElement, tripDay.getElement(), RenderPosition.BEFOREEND);
+
+  routesDay.slice(0, showingRoutesCount)
+    .forEach((route) => {
+      renderRoute(tripDayList, route);
+    });
+  return ``;
+};
 
 let showingRoutesCount = SHOWING_ROUTES_COUNT_ON_START;
 let routesList = {};
 
-routes.slice(1, showingRoutesCount)
+routes.slice(0, showingRoutesCount)
   .forEach((route) => {
     const date = `${route.startDate.getFullYear()}-${route.startDate.getMonth() + 1}-${route.startDate.getDate()}`;
 
@@ -91,5 +149,5 @@ routes.slice(1, showingRoutesCount)
   });
 
 for (let [key, value] of Object.entries(routesList)) {
-  render(tripDaysElement, tripDayTemplate(key, value), `beforeEnd`);
+  render(tripDaysElement, renderRouteDay(key, value), RenderPosition.BEFOREEND);
 }
