@@ -1,13 +1,14 @@
 import {
-  formatTime
+  formatTime,
+  createElement,
 } from '../utils';
 
 /**
- * Create template route
+ * Create route markup
  * @param {object} route
- * @return {string} html template route
+ * @return {string} route markup
  */
-const routeTemplate = (route) => {
+const createRouteMarkup = (route) => {
   const {
     type,
     action,
@@ -60,6 +61,27 @@ const routeTemplate = (route) => {
   );
 };
 
-export {
-  routeTemplate,
-};
+export default class Route {
+  constructor(route) {
+    this._route = route;
+    this._element = null;
+  }
+
+
+
+  getTemplate() {
+    return createRouteMarkup(this._route);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
