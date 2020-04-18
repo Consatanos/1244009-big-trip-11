@@ -1,6 +1,9 @@
 import {
   NAMES_OF_MONTH,
 } from '../const';
+import {
+  createElement,
+} from '../utils';
 
 /**
  * Generate points list
@@ -26,11 +29,11 @@ const genarateDates = (start, end) => {
 };
 
 /**
- * Create template trip-info
+ * Create trip-info markup
  * @param {array} points
- * @return {string} html template trip-info
+ * @return {string} trip-info markup
  */
-const tripInfoTemplate = (points) => {
+const createTripInfoMarkup = (points) => {
   const pointList = points.reduce((acc, point) => {
     acc.push(point.point);
     return acc;
@@ -48,6 +51,25 @@ const tripInfoTemplate = (points) => {
   );
 };
 
-export {
-  tripInfoTemplate,
-};
+export default class TripInfo {
+  constructor(points) {
+    this._points = points;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripInfoMarkup(this._points);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
