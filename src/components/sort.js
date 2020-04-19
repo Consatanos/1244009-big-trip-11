@@ -1,8 +1,12 @@
+import {
+  createElement,
+} from '../utils';
+
 /**
- * Create template sort
- * @return {string} html template sort
+ * Create sort markup
+ * @return {string} sort markup
  */
-const sortTemplate = () => {
+const createSortMarkup = () => {
   return (
     `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
       <span class="trip-sort__item  trip-sort__item--day">Day</span>
@@ -37,6 +41,24 @@ const sortTemplate = () => {
   );
 };
 
-export {
-  sortTemplate,
-};
+export default class Sort {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSortMarkup();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
