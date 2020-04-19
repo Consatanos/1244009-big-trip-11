@@ -120,18 +120,17 @@ const renderRoute = (routeDayElement, route) => {
  * Render route day with routes
  * @param {string} day
  * @param {array} routesDay
- * @return {string}
  */
 const renderRouteDay = (day, routesDay) => {
   const tripDay = new TripDayComponent(day);
   const tripDayList = tripDay.getElement().querySelector(`.trip-events__list`);
-  render(tripDaysElement, tripDay.getElement(), RenderPosition.BEFOREEND);
 
   routesDay.slice(0, showingRoutesCount)
     .forEach((route) => {
       renderRoute(tripDayList, route);
     });
-  return ``;
+
+  render(tripDaysElement, tripDay.getElement(), RenderPosition.BEFOREEND);
 };
 
 let showingRoutesCount = SHOWING_ROUTES_COUNT_ON_START;
@@ -149,5 +148,5 @@ routes.slice(0, showingRoutesCount)
   });
 
 for (let [key, value] of Object.entries(routesList)) {
-  render(tripDaysElement, renderRouteDay(key, value), RenderPosition.BEFOREEND);
+  renderRouteDay(key, value);
 }
