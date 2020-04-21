@@ -1,15 +1,13 @@
+import AbstractComponent from './abstract-component';
 import {
   NAMES_OF_MONTH,
 } from '../const';
-import {
-  createElement,
-} from '../utils';
 
 /**
  * Create trip-day markup
- * @param {string} date
- * @param {array} routes
- * @return {string} trip-day markup
+ * @param {String} date
+ * @param {Array} routes
+ * @return {String} trip-day markup
  */
 const createTripDayMarkup = (date) => {
   const formalDate = new Date(date);
@@ -27,26 +25,15 @@ const createTripDayMarkup = (date) => {
   );
 };
 
-export default class TripDay {
+export default class TripDay extends AbstractComponent {
   constructor(date, routes) {
+    super();
+
     this._date = date;
     this._routes = routes;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripDayMarkup(this._date, this._routes);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

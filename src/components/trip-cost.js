@@ -1,11 +1,9 @@
-import {
-  createElement,
-} from '../utils';
+import AbstractComponent from './abstract-component';
 
 /**
  * Create trip-cost markup
- * @param {number} cost
- * @return {string} trip-cost markup
+ * @param {Number} cost
+ * @return {String} trip-cost markup
  */
 const createTripCostMarkup = (cost) => {
   return (
@@ -15,25 +13,14 @@ const createTripCostMarkup = (cost) => {
   );
 };
 
-export default class TripCost {
+export default class TripCost extends AbstractComponent {
   constructor(cost) {
+    super();
+
     this._cost = cost;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripCostMarkup(this._cost);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

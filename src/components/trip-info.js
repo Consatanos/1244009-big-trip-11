@@ -1,14 +1,12 @@
+import AbstractComponent from './abstract-component';
 import {
   NAMES_OF_MONTH,
 } from '../const';
-import {
-  createElement,
-} from '../utils';
 
 /**
  * Generate points list
- * @param {array} points
- * @return {string}
+ * @param {Array} points
+ * @return {String}
  */
 const generatePointList = (points) => {
   return points.map((point) => point).join(` &mdash; `);
@@ -16,9 +14,9 @@ const generatePointList = (points) => {
 
 /**
  * Generate dates
- * @param {string} start
- * @param {string} end
- * @return {string}
+ * @param {String} start
+ * @param {String} end
+ * @return {String}
  */
 const genarateDates = (start, end) => {
   const startDay = start.getDate();
@@ -30,8 +28,8 @@ const genarateDates = (start, end) => {
 
 /**
  * Create trip-info markup
- * @param {array} points
- * @return {string} trip-info markup
+ * @param {Array} points
+ * @return {String} trip-info markup
  */
 const createTripInfoMarkup = (points) => {
   const pointList = points.reduce((acc, point) => {
@@ -51,25 +49,14 @@ const createTripInfoMarkup = (points) => {
   );
 };
 
-export default class TripInfo {
+export default class TripInfo extends AbstractComponent {
   constructor(points) {
+    super();
+
     this._points = points;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripInfoMarkup(this._points);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
