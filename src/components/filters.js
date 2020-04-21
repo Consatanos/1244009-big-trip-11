@@ -41,7 +41,7 @@ export default class Filter extends AbstractComponent {
     this._filters = filters;
   }
 
-  getTempate() {
+  getTemplate() {
     return createFiltersMarkup(this._filters);
   }
 }

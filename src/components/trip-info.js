@@ -28,16 +28,26 @@ const genarateDates = (start, end) => {
 
 /**
  * Create trip-info markup
- * @param {Array} points
+ * @param {Array} routes
  * @return {String} trip-info markup
  */
-const createTripInfoMarkup = (points) => {
-  const pointList = points.reduce((acc, point) => {
+const createTripInfoMarkup = (routes) => {
+  const routePoints = routes.reduce((acc, route) => {
+    acc.push({
+      point: route.location,
+      startDay: route.startDate,
+      endDay: route.endDate,
+    });
+    return acc;
+  }, []);
+
+  const pointList = routePoints.reduce((acc, point) => {
     acc.push(point.point);
     return acc;
   }, []);
-  const startDay = points[0].startDay;
-  const endDay = points[points.length - 1].endDay;
+
+  const startDay = routePoints[0].startDay;
+  const endDay = routePoints[routePoints.length - 1].endDay;
 
   return (
     `<section class="trip-main__trip-info  trip-info">

@@ -198,4 +198,12 @@ export default class RouteEdit extends AbstractComponent {
   getTemplate() {
     return createRouteEditMarkup(this._route);
   }
+
+  setEditButtonClickHandler(handler) {
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, handler);
+  }
+
+  setSubmitHandler(handler) {
+    this.getElement().querySelector(`.event--edit`).addEventListener(`submit`, handler);
+  }
 }

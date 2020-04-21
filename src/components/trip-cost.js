@@ -2,13 +2,17 @@ import AbstractComponent from './abstract-component';
 
 /**
  * Create trip-cost markup
- * @param {Number} cost
+ * @param {Number} routes
  * @return {String} trip-cost markup
  */
-const createTripCostMarkup = (cost) => {
+const createTripCostMarkup = (routes) => {
+  const routesCost = routes.reduce((acc, route) => {
+    return acc + route.cost.value;
+  }, 0);
+
   return (
     `<p class="trip-info__cost">
-      Total: &euro;&nbsp;<span class="trip-info__cost-value">${cost}</span>
+      Total: &euro;&nbsp;<span class="trip-info__cost-value">${routesCost}</span>
     </p>`
   );
 };
