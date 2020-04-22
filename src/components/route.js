@@ -1,12 +1,12 @@
+import AbstractComponent from './abstract-component';
 import {
   formatTime,
-  createElement,
-} from '../utils';
+} from '../utils/common';
 
 /**
  * Create route markup
- * @param {object} route
- * @return {string} route markup
+ * @param {Object} route
+ * @return {String} route markup
  */
 const createRouteMarkup = (route) => {
   const {
@@ -61,27 +61,18 @@ const createRouteMarkup = (route) => {
   );
 };
 
-export default class Route {
+export default class Route extends AbstractComponent {
   constructor(route) {
+    super();
+
     this._route = route;
-    this._element = null;
   }
-
-
 
   getTemplate() {
     return createRouteMarkup(this._route);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setEditButtonClickHandler(handler) {
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, handler);
   }
 }

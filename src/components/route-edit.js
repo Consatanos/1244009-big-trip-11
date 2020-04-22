@@ -1,15 +1,15 @@
+import AbstractComponent from './abstract-component';
 import {
   ROUTE_ITEMS,
 } from '../const';
 import {
-  createElement,
   formatTime,
-} from '../utils';
+} from '../utils/common';
 
 /**
  * Create event list markup
- * @param {string} active
- * @return {sting}
+ * @param {String} active
+ * @return {String}
  */
 const createEventList = (active) => {
   return ROUTE_ITEMS.map((item) => {
@@ -28,8 +28,8 @@ const createEventList = (active) => {
 
 /**
  * Create offers list markup
- * @param {object} offers
- * @return {string}
+ * @param {Object} offers
+ * @return {String}
  */
 const createOffersList = (offers) => {
   return offers.map((offer) => {
@@ -52,8 +52,8 @@ const createOffersList = (offers) => {
 
 /**
  * Create destination descriptions
- * @param {array} descriptions
- * @return {string}
+ * @param {Array} descriptions
+ * @return {String}
  */
 const createDestinationDescriptions = (descriptions) => {
   return descriptions.map((description) => `<p class="event__destination-description">${description}</p>`).join(`\n`);
@@ -61,8 +61,8 @@ const createDestinationDescriptions = (descriptions) => {
 
 /**
  * Create destination photo
- * @param {array} photos
- * @return {string}
+ * @param {Array} photos
+ * @return {String}
  */
 const createDestinationPhoto = (photos) => {
   return photos.map((photo) => `<img class="event__photo" src="${photo}" alt="Event photo">`).join(`\n`);
@@ -70,8 +70,8 @@ const createDestinationPhoto = (photos) => {
 
 /**
  * Create route-edit markup
- * @param {object} route
- * @return {string} route-edit markup
+ * @param {Object} route
+ * @return {String} route-edit markup
  */
 const createRouteEditMarkup = (route) => {
   const {
@@ -188,25 +188,22 @@ const createRouteEditMarkup = (route) => {
   );
 };
 
-export default class RouteEdit {
+export default class RouteEdit extends AbstractComponent {
   constructor(route) {
+    super();
+
     this._route = route;
-    this._element = null;
   }
 
   getTemplate() {
     return createRouteEditMarkup(this._route);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  setEditButtonClickHandler(handler) {
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, handler);
   }
 
-  removeElement() {
-    this._element = null;
+  setSubmitHandler(handler) {
+    this.getElement().querySelector(`.event--edit`).addEventListener(`submit`, handler);
   }
 }
